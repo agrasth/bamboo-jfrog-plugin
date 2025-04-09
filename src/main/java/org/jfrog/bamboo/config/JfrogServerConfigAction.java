@@ -99,6 +99,10 @@ public class JfrogServerConfigAction extends BambooActionSupport implements Glob
         return SUCCESS;
     }
 
+    public String create() {
+        return doCreate();
+    }
+
     // Get current server config details from bandana to show on UI form
     @SuppressWarnings("unused")
     public String doEdit() throws IllegalArgumentException {

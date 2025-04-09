@@ -16,7 +16,6 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jfrog.bamboo.config.ServerConfigManager;
 import org.jfrog.bamboo.config.ServerConfig;
-import org.jfrog.bamboo.config.ServerConfigManagerImpl;
 import org.jfrog.bamboo.utils.BambooUtils;
 import org.jfrog.bamboo.utils.BuildLog;
 import org.jfrog.bamboo.utils.ExecutableRunner;
@@ -61,10 +60,10 @@ public class JfTask extends JfContext implements TaskType {
     @Override
     public @NotNull TaskResult execute(final @NotNull TaskContext taskContext) {
         buildLog = new BuildLog(taskContext.getBuildLogger());
-        serverConfigManager = serverConfigManager;
         ConfigurationMap confMap = taskContext.getConfigurationMap();
         TaskResultBuilder resultBuilder = TaskResultBuilder.newBuilder(taskContext);
         ServerConfig selectedServerConfig = serverConfigManager.getServerConfigById(confMap.get(JF_TASK_SERVER_ID));
+        buildLog.info("Selected Server Config: " + selectedServerConfig);
         if (selectedServerConfig == null) {
             buildLog.error("The selected Server ID doesn't exists: " + confMap.get(JF_TASK_SERVER_ID));
             return resultBuilder.failedWithError().build();
